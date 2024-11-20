@@ -1,1 +1,93 @@
 /* You can add global styles to this file, and also import other style files */
+
+@use '@angular/material' as mat;
+@import "style-variables/colors";
+@import 'maplibre-gl/dist/maplibre-gl.css';
+
+html, body {
+  height: 100%;
+  background-color: $background-body;
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+body {
+  margin: 0 ;
+  padding: 0;
+  border: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color:$dark-primary-text;
+}
+
+h1,
+h2,
+h3 {
+  color: $secondary-color;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.container {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  @media (max-width: 599px) {
+    max-width: 599px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  @media (min-width: 600px) {
+    max-width: 600px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  @media (min-width: 960px) {
+    max-width: 960px;
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+  @media (min-width: 1280px) {
+    max-width: 1280px;
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
+  @media (min-width: 1920px) {
+    max-width: 1920px;
+    padding-left: 16rem;
+    padding-right: 16rem;
+  }
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+mat-toolbar {
+  --mat-toolbar-container-background-color: #d7e3ff;
+  --mat-toolbar-container-text-color: mat.$m2-light-secondary-text;
+}
+
+.mat-typography  {
+  & h1,h2,h3,h4,h5,h6,p {
+    margin: 0;
+  }
+  //font: 400 3.562rem / 4rem Roboto, sans-serif;
+  //letter-spacing: -0.016rem;
+  //margin: 0;
+}

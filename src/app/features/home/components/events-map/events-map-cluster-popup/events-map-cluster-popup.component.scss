@@ -1,0 +1,25 @@
+.map-popup {
+  height: 400px;
+  max-height: 400px;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.map-popup__content {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-popup__pagination {
+  display: flex;
+  justify-content: space-around;
+}
+
+.map-popup__pagination__numbers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

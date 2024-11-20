@@ -1,0 +1,21 @@
+<mat-card class="example-card scrollbar-hide" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>{{ event.categorie_de_la_manifestation }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <h6 class="card__title">{{ event.nom_de_la_manifestation }}</h6>
+    <p>
+      {{event.descriptif_court}}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions>
+  <mat-card-footer class="card__footer">
+    <span>Date: {{ event.dates_affichage_horaires }}</span>
+    <span>Lieu: {{ event.lieu_nom }}</span>
+    <span>Prix: {{ event.tarif_normal }}</span>
+  </mat-card-footer>
+</mat-card>
+

@@ -1,0 +1,11 @@
+<div class="container layout scrollbar-hide">
+  @if (events().total_count > 0) {
+    <mat-grid-list [cols]="gridColumn()" gutterSize="1rem" rowHeight="400px">
+      @for (event of events().results; track event.identifiant) {
+        <mat-grid-tile>
+          <app-event-card [event]="event"></app-event-card>
+        </mat-grid-tile>
+      }
+    </mat-grid-list>
+  }
+</div>

@@ -1,0 +1,28 @@
+@import "colors";
+
+:host {
+  flex: 1 1 0;
+}
+
+.example-card {
+  max-height: 400px;
+  height: 400px;
+  overflow: auto;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.card__footer {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card__title {
+  color: $secondary-color;
+}
+
+

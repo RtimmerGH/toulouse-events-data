@@ -1,0 +1,24 @@
+<div class="map-popup">
+  <div class="map-popup__content scrollbar-hide">
+    @if (clusterPoints()) {
+      @for (point of clusterPoints().clusterData ; track point.properties['identifiant']) {
+        <span><strong>{{point.properties?.['nom_de_la_manifestation']}}</strong></span><br/>
+        <span><strong>Date:</strong> {{ point.properties?.['dates_affichage_horaires'] }}</span><br/>
+        <mat-divider></mat-divider>
+      }
+    }
+  </div>
+  <div class="map-popup__pagination">
+    <button type="button" mat-icon-button (click)="onClickPrevious.emit()">
+      <mat-icon>arrow_backward</mat-icon>
+    </button>
+    <div class="map-popup__pagination__numbers">
+      @if (pageInfo()) {
+        <span>{{pageInfo()}}</span>
+      }
+    </div>
+    <button type="button" mat-icon-button (click)="onClickNext.emit()">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+</div>

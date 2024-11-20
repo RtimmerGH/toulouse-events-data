@@ -1,0 +1,106 @@
+<h3>EVENTS MAP</h3>
+<button mat-flat-button style="margin-bottom: 1rem; margin-left: 1rem" (click)="getNextEvents()">Next events</button>
+<mgl-map
+  class="map-container"
+  [style]="MAP_TILER_URL+'?key='+MAP_TILER_KEY"
+  [zoom]="[9]"
+  [center]="[1.47903, 43.57706]"
+  [preserveDrawingBuffer]="true"
+  [cursorStyle]="cursorStyle()"
+  (mapClick)="resetSelection()"
+>
+  <mgl-control position="top-left" mglNavigation></mgl-control>
+  <mgl-control mglScale unit="metric" position="top-left"></mgl-control>
+  <mgl-image
+    id="marker"
+    url="./assets/images/map-marker.png"
+    (imageLoaded)="imageLoaded = true"
+  >
+  </mgl-image>
+  @if (imageLoaded) {
+    <mgl-geojson-source
+      id="eventPoints"
+      [data]="eventsGeojson()"
+      [cluster]="true"
+      [clusterMaxZoom]="18"
+      [clusterRadius]="50"
+    >
+    </mgl-geojson-source>
+    <mgl-layer
+      id="clusters"
+      type="symbol"
+      source="eventPoints"
+      [filter]="['has', 'point_count']"
+      [layout]="{
+        'icon-image': 'marker',
+        'icon-overlap': 'always',
+        'icon-anchor': 'bottom',
+        'icon-size': 0.10
+        }"
+      (layerClick)="onClickCluster($event)"
+      (layerMouseEnter)="cursorStyle.set('pointer')"
+      (layerMouseLeave)="cursorStyle.set('')"
+    >
+    </mgl-layer>
+    <mgl-layer
+      id="clusterBadge"
+      type="circle"
+      source="eventPoints"
+      [filter]="['has', 'point_count']"
+      [paint]="{
+        'circle-color': '#fff',
+        'circle-radius': 9,
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#000',
+        'circle-translate': [0, -34]
+        }"
+    >
+    </mgl-layer>
+    <mgl-layer
+      id="clusterNumbers"
+      type="symbol"
+      source="eventPoints"
+      [filter]="['has', 'point_count']"
+      [layout]="{
+        'text-field': '{point_count_abbreviated}',
+        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+        'text-size': 12
+        }"
+      [paint]="{
+        'text-translate': [0, -34],
+        'text-translate-anchor': 'viewport' }"
+      (layerClick)="onClickCluster($event)"
+      (layerMouseEnter)="cursorStyle.set('pointer')"
+      (layerMouseLeave)="cursorStyle.set('')"
+    >
+    </mgl-layer>
+    <mgl-layer
+      id="unclustered-point"
+      type="symbol"
+      source="eventPoints"
+      [filter]="['!has', 'point_count']"
+      [layout]="{ 'icon-image': 'marker', 'icon-size': 0.10, 'icon-allow-overlap': true  }"
+      (layerClick)="onClickPoint($event)"
+      (layerMouseEnter)="cursorStyle.set('pointer')"
+      (layerMouseLeave)="cursorStyle.set('')"
+    >
+    </mgl-layer>
+    @if (selectedFeature) {
+      <mgl-popup [lngLat]="popupLngLat" [closeOnClick]="false" (popupClose)="resetSelection()">
+        <span><strong>{{selectedFeature.properties?.['nom_de_la_manifestation']}}</strong></span><br/>
+        <span><strong>Date:</strong> {{ selectedFeature.properties?.['dates_affichage_horaires'] }}</span><br/>
+        <span><strong>Lieu:</strong> {{ selectedFeature.properties?.['lieu_nom'] }}</span><br/>
+        <span><strong>Prix:</strong> {{ selectedFeature.properties?.['tarif_normal'] }}</span>
+      </mgl-popup>
+    }
+    @if (selectedCluster) {
+      <mgl-popup [lngLat]="popupLngLat" [closeOnClick]="false" (popupClose)="resetSelection()">
+        <app-events-map-cluster-popup (onClickNext)="getNextClusterEvents()" (onClickPrevious)="getPreviousClusterEvents()" [clusterPoints]="selectedClusterPoints()" [clusterPointsMetaData]="selectedClusterPointsMetaData()"></app-events-map-cluster-popup>
+      </mgl-popup>
+    }
+  }
+</mgl-map>
+<!--@for (point of selectedClusterPoints() ; track point.properties['identifiant']) {-->
+<!--  <span><strong>{{point.properties?.['nom_de_la_manifestation']}}</strong></span><br/>-->
+<!--  <span><strong>Date:</strong> {{ point.properties?.['dates_affichage_horaires'] }}</span><br/><br/>-->
+<!--}-->
